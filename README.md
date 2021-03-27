@@ -3,6 +3,13 @@
 Builds a static blog site from markdown files that requires no JavaScript to
 browse and supports mermaid diagrams embedded as svg.
 
+## Version 1.0.0 Plans
+
+*CAUTION*: This package is currently at version 0.5.0\
+It will generate a static site, but quite a poor one. I am planning to get a
+version 1.0.0 out within the next week or so. Until then, I'm publishing this
+to test other workflows while I finish up the build.
+
 ## What is this, and why does it exist?
 
 MDWeblog is a static site generator written in node.js. There are tons of
