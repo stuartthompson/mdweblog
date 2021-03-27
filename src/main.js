@@ -59,6 +59,8 @@ const generateSite = (
     const indexOutputPath = path.join(outputPath, 'index.html');
     const indexTemplate = readFile(indexTemplatePath);
     buildIndexFile(contentList, indexTemplate, indexOutputPath);
+
+    return contentList.length;
 }
 
 export default generateSite;
