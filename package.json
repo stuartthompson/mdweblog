@@ -1,6 +1,6 @@
 {
   "name": "mdweblog",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Static blog site generator. No JavaScript. Mermaid support.",
   "author": "Stuart Thompson",
   "license": "GPL-3.0-or-later",

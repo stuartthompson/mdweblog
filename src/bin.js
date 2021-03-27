@@ -20,6 +20,6 @@ console.log(`Index template: ${indexTemplate}`);
 console.log(`Output path: ${outputPath}`);
 
 const numPages =
-    generateSite(sourcePath, indexTemplate, contentTemplate, outputPath);
+    generateSite(sourcePath, contentTemplate, indexTemplate outputPath);
 
 console.log(`Generated ${numPages} pages.`);
