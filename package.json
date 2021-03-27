@@ -1,28 +1,31 @@
 {
-  "name": "blog",
-  "version": "0.1.0",
-  "description": "Personal blog site.",
-  "main": "index.js",
-  "scripts": {
-    "start": "node src/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/stuartthompson/blog.git"
-  },
+  "name": "mdweblog",
+  "version": "0.5.0",
+  "description": "Static blog site generator. No JavaScript. Mermaid support.",
+  "author": "Stuart Thompson",
+  "license": "GPL-3.0-or-later",
   "keywords": [
     "markdown",
     "blog",
     "html",
     "static"
   ],
-  "author": "Stuart Thompson",
-  "license": "GPL-3.0-or-later",
-  "type": "module",
-  "bugs": {
-    "url": "https://github.com/stuartthompson/blog/issues"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stuartthompson/mdweblog.git"
   },
-  "homepage": "https://github.com/stuartthompson/blog#readme",
+  "bugs": {
+    "url": "https://github.com/stuartthompson/mdweblog/issues"
+  },
+  "homepage": "https://github.com/stuartthompson/mdweblog#readme",
+  "type": "module",
+  "main": "src/main.js",
+  "bin": {
+    "mdweblog": "src/bin.js"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "dependencies": {
     "glob": "^7.1.6",
     "gray-matter": "^4.0.2",
