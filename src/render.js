@@ -48,7 +48,7 @@ const renderContent = (template, title, date, content) => {
 const renderIndex = (template, contentList) => {
     const pageCount = contentList.length;
 
-    const excerptTemplate = readFile('/templates/post-excerpt.html');
+    const excerptTemplate = readFile('/templates/excerpt.html');
 
     // Build post list
     let postList = ``;
