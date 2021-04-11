@@ -3,12 +3,13 @@ import path from 'path';
 import { readFile } from './files.js';
 import { buildContentFile, buildIndexFile } from './render.js';
 
-// Derives the output file name from a content source file.
-//
-// Strips the file path and replaces the extension with .html
-//
-// Params:
-//  * filePath - The file path of the source content file.
+/**
+ * Derives the output file name from a content source file.
+ * Strips the file path and replaces the extension with .html
+ *
+ * @param {string} filePath - The file path of the source content file.
+ * @return - The output path of the file to generate.
+ */
 const getOutputFileName = filePath => {
     const basename = path.basename(filePath);
     const contentFileName =
@@ -17,13 +18,15 @@ const getOutputFileName = filePath => {
     return contentFileName;
 }
 
-// Renders content files from the source path using the supplied template and
-//  writes the rendered output to the provided output path.
-//
-// Params:
-//  * sourcePath   - The source path from which to read content files.
-//  * templatePath - The path to the template used to render content.
-//  * outputPath   - The destination path in which to write output.
+/**
+ * Renders content files from the source path using the supplied template and
+ *  writes the rendered output to the provided output path.
+ *
+ * @param {string} sourcePath - The source path to read content files from.
+ * @param {string} templatePath - The path to the content template.
+ * @param {string} outputPath - The destination path to write to.
+ * @returns - The generated content pages (title, excerpt, path).
+ */
 const generateContent = (sourcePath, templatePath, outputPath) => {
     const template = readFile(templatePath);
     let contentList = [];
@@ -32,20 +35,22 @@ const generateContent = (sourcePath, templatePath, outputPath) => {
     filePaths.forEach(filePath => {
         const outputFileName = getOutputFileName(filePath);
         const outputFilePath = path.join(outputPath, outputFileName);
-        buildContentFile(filePath, template, outputFilePath);
-        contentList.push(outputFileName);
+        const content = buildContentFile(filePath, template, outputFilePath);
+        contentList.push(content);
     });
 
     return contentList;
 }
 
-// Generates the website.
-//
-// Params:
-//  * contentSourcePath   - The path to the content source files.
-//  * contentTemplatePath - The path to the content template.
-//  * indexTemplatePath   - The path to the index template.
-//  * outputPath          - The path in which to render the generated files.
+/**
+ * Generates the website.
+ *
+ * @param {string} contentSourcePath - The path to the content source files.
+ * @param {string} contentTemplatePath - The path to the content template.
+ * @param {string} indexTemplatePath - The path to the index template.
+ * @param {string} outputPath - The path to render the generated files into.
+ * @returns - The number of content files that were generated.
+ */
 const generateSite = (
     contentSourcePath,
     contentTemplatePath,
