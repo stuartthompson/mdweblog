@@ -1,6 +1,6 @@
 import glob from 'glob';
 import path from 'path';
-import { readFile } from './files.js';
+import { saveFile, readFile } from './files.js';
 import { buildContentFile, buildIndexFile } from './render.js';
 
 /**
@@ -64,6 +64,13 @@ const generateSite = (
     const indexOutputPath = path.join(outputPath, 'index.html');
     const indexTemplate = readFile(indexTemplatePath);
     buildIndexFile(contentList, indexTemplate, indexOutputPath);
+
+    // Copy styles
+    const stylePaths = glob.sync('styles/**.css');
+    stylePaths.forEach(stylePath => {
+        const css = readFile(stylePath);
+        saveFile(`site/styles/${path.basename(stylePath)}`, css);
+    });
 
     return contentList.length;
 }

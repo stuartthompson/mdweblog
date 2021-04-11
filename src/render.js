@@ -3,6 +3,7 @@ import marked from 'marked';
 import matter from 'gray-matter';
 import path from 'path';
 import { readFile, saveFile } from './files.js';
+import { after } from './text.js'
 
 /**
  * Parses a markdown content file.
@@ -11,10 +12,14 @@ import { readFile, saveFile } from './files.js';
  */
 const parseContentFile = filePath => {
     const contents = readFile(filePath);
+    // Parse front-matter (---) into metadata and content
     const parsed = matter(contents, { excerpt: true });
-    const html = marked(parsed.content);
+    // Remove excerpt from content
+    const postContent = after(parsed.content, '---');
+    // Parse content (markdown) to html
+    const html = marked(postContent);
 
-    return { ...parsed, html };
+    return { ...parsed, html};
 }
 
 /**

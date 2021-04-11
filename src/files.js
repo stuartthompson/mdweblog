@@ -4,7 +4,7 @@ import path from 'path';
 
 /// Reads a file from disk
 const readFile = (filename) => {
-    const contents = 
+    const contents =
         fs.readFileSync(path.join(path.resolve(), filename), 'utf8');
     return contents;
 }
