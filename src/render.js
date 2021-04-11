@@ -3,7 +3,7 @@ import marked from 'marked';
 import matter from 'gray-matter';
 import path from 'path';
 import { readFile, saveFile } from './files.js';
-import { after } from './text.js'
+import { after, formatDate } from './text.js'
 
 /**
  * Parses a markdown content file.
@@ -33,9 +33,9 @@ const parseContentFile = filePath => {
  */
 const renderContent = (template, title, date, content) => {
     return template
-        .replace(/<!--Title-->/g, title)
-        .replace(/<!--Date-->/g, date)
-        .replace(/<!--Content-->/g, content);
+        .replace(/##TITLE##/g, title)
+        .replace(/##DATE##/g, date)
+        .replace(/##CONTENT##/g, content);
 }
 
 /**
@@ -48,20 +48,25 @@ const renderContent = (template, title, date, content) => {
 const renderIndex = (template, contentList) => {
     const pageCount = contentList.length;
 
+    const excerptTemplate = readFile('/templates/post-excerpt.html');
+
     // Build post list
     let postList = ``;
-    contentList.map(c => {
-        postList += `
-        <div class="postContainer">
-            <a href="${c.file}" class="postLink">${c.title}</a><br/>
-            <div class="postExcerpt">${c.excerpt}</div>
-        </div>
-        `;
+    const sortedContent = contentList.slice().sort(
+        (a, b) => new Date(b.date) - new Date(a.date));
+    sortedContent.map(c => {
+        const excerpt =
+            excerptTemplate
+                .replace(/##DATE##/g, c.date)
+                .replace(/##LINK##/g, c.file)
+                .replace(/##TITLE##/g, c.title)
+                .replace(/##EXCERPT##/g, c.excerpt);
+        postList += excerpt;
     });
 
     return template
-        .replace(/<!--PageCount-->/g, pageCount)
-        .replace(/<!--PostList-->/g, postList);
+        .replace(/##PAGECOUNT##/g, pageCount)
+        .replace(/##EXCERPTS##/g, postList);
 
 }
 
@@ -76,12 +81,13 @@ const renderIndex = (template, contentList) => {
 const buildContentFile = (sourceFilePath, template, outputFilePath) => {
     const content = parseContentFile(sourceFilePath);
     const title = content.data.title;
-    const date = content.data.date;
+    const date = formatDate(content.data.date);
     const rendered = renderContent(template, title, date, content.html);
 
     saveFile(outputFilePath, rendered);
 
     return {
+        date,
         title: content.data.title,
         excerpt: content.excerpt,
         file: path.basename(outputFilePath)

@@ -15,5 +15,13 @@ const after = (s, p) => {
     return result;
 }
 
-export { after };
+const formatDate = (date) => {
+    let dt = new Date(date);
+    let y = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(dt);
+    let m = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(dt);
+    let d = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(dt);
+    return `${y}-${m}-${d}`;
+}
+
+export { after, formatDate };
 
