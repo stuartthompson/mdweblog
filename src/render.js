@@ -28,13 +28,15 @@ const parseContentFile = filePath => {
  * @param {string} template - The html template used to render the content.
  * @param {string} title - The title of the content page.
  * @param {string} date - The publish data of the content page.
+ * @param {string} excerpt - The excerpt.
  * @param {string} content - The converted html content of the markdown source.
  * @returns - The page content, rendered into the template.
  */
-const renderContent = (template, title, date, content) => {
+const renderContent = (template, title, date, excerpt, content) => {
     return template
         .replace(/##TITLE##/g, title)
         .replace(/##DATE##/g, date)
+        .replace(/##EXCERPT##/g, excerpt)
         .replace(/##CONTENT##/g, content);
 }
 
@@ -67,7 +69,6 @@ const renderIndex = (template, contentList) => {
     return template
         .replace(/##PAGECOUNT##/g, pageCount)
         .replace(/##EXCERPTS##/g, postList);
-
 }
 
 /**
@@ -82,7 +83,8 @@ const buildContentFile = (sourceFilePath, template, outputFilePath) => {
     const content = parseContentFile(sourceFilePath);
     const title = content.data.title;
     const date = formatDate(content.data.date);
-    const rendered = renderContent(template, title, date, content.html);
+    const rendered =
+        renderContent(template, title, date, content.excerpt, content.html);
 
     saveFile(outputFilePath, rendered);
 
